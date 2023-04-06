@@ -41,7 +41,10 @@ class Home extends StatelessWidget {
         onPressed: () {},
         shape: const StadiumBorder(),
         backgroundColor: mainColor,
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: white,
+        ),
       ),
     );
   }

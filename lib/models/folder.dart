@@ -69,12 +69,14 @@ var folders = List.generate(
       name: "Folder $index",
       tasks: List.generate(
         tasks,
-        (index) => Task(
-          title: "task $index",
-          description: "description $index",
-          time: DateTime.now(),
-          isComplete: Random().nextBool(),
-        ),
+        (index) {
+          return Task(
+            title: "task $index",
+            description: "description $index",
+            time: DateTime.now(),
+            isComplete: Random().nextInt(2) == 1 ? false : true,
+          );
+        },
       ),
     );
   },
