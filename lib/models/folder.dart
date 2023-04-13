@@ -7,9 +7,11 @@ import 'package:flutter/foundation.dart';
 import 'task.dart';
 
 class Folder {
+  final String id;
   final String name;
   final List<Task> tasks;
   Folder({
+    required this.id,
     required this.name,
     required this.tasks,
   });
@@ -19,6 +21,7 @@ class Folder {
     List<Task>? tasks,
   }) {
     return Folder(
+      id: name ?? this.name,
       name: name ?? this.name,
       tasks: tasks ?? this.tasks,
     );
@@ -33,6 +36,7 @@ class Folder {
 
   factory Folder.fromMap(Map<String, dynamic> map) {
     return Folder(
+      id: map["id"] as String,
       name: map['name'] as String,
       tasks: List<Task>.from(
         (map['tasks'] as List<int>).map<Task>(
@@ -48,17 +52,19 @@ class Folder {
       Folder.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'Folder(name: $name, tasks: $tasks)';
+  String toString() => 'Folder(id: $id, name: $name, tasks: $tasks)';
 
   @override
   bool operator ==(covariant Folder other) {
     if (identical(this, other)) return true;
 
-    return other.name == name && listEquals(other.tasks, tasks);
+    return other.id == id &&
+        other.name == name &&
+        listEquals(other.tasks, tasks);
   }
 
   @override
-  int get hashCode => name.hashCode ^ tasks.hashCode;
+  int get hashCode => id.hashCode ^ name.hashCode ^ tasks.hashCode;
 }
 
 var folders = List.generate(
@@ -66,6 +72,7 @@ var folders = List.generate(
   (index) {
     final tasks = Random().nextInt(8);
     return Folder(
+      id: "$index",
       name: "Folder $index",
       tasks: List.generate(
         tasks,
